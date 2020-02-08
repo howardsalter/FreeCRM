@@ -1,10 +1,6 @@
-# Slim 3 Skeleton
+# FreeCRM
 
 This is a simple skeleton project for Slim 3 that includes Twig, Flash messages and Monolog.
-
-## Create your project:
-
-    $ composer create-project --no-interaction --stability=dev akrabat/slim3-skeleton my-app
 
 ### Run it:
 
