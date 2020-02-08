@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>Contacts - freeCRM</title>
+
+    <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link href="css/dashboard.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="#" style="padding-left: 10px; padding-right: 10px">freeCRM</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/dashboard">Home</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/contacts">Contacts <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/transactions">Transactions</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Logout</a>
+            </li>
+
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" value="{{token}}">
+          </form>
+          <button class="btn btn-outline-success" id="btnSearch">Search</button>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="row" style="padding-bottom: 10px">
+        <div class="col-md-12 col-lg-12 px-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">{{user.name}} - Contacts</h1>
+          </div>
+        </div>
+      </div> 
+      {% if search == "true" %}
+        <div class="row">
+          <div class="col-md-12 col-lg-12 px-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap pt-3 pb-2 mb-3 border-bottom">
+              <h1 class="h2">Search - "{{token}}"</h1>
+            </div>
+          </div>
+        </div>
+      {% endif %} 
+      <div class="list-group">
+          {% for contact in contacts %}
+            <a href="/contacts/{{contact.id}}" class="list-group-item list-group-item-action">
+              <h2>{{contact.first_name}} {% if contact.spouse_first != "" %} & {{contact.spouse_first}}{% endif %} {{contact.last_name}}</h2>
+              <p>{{contact.address1}}, {{contact.city}}, {{contact.st}}, {{contact.zip}}</br>
+              {{contact.phone}}</p>
+            </a>
+          {% endfor %}
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="assets/js/searchsite.js"></script>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script>
+    <script>
+      $(document).ready(function(){
+        $('#btnSearch').click(function(e){
+          e.stopPropagation();
+          var inputElement = $('input[type="search"]').val();
+          console.log("")
+          inputElement.replace(" ", "+");
+          window.location.href = "/search/" + inputElement;
+        });
+      });
+    </script>  
+  </body>
+</html>

@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>FreeCRM - Dashboard</title>
+
+    <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link href="css/dashboard.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="#" style="padding-left: 10px; padding-right: 10px">freeCRM</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/dashboard">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/contacts">Contacts</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/transactions">Transactions</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Logout</a>
+            </li>
+
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" value="{{token}}">
+          </form>
+          <button class="btn btn-outline-success" id="btnSearch">Search</button>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="row" style="padding-bottom: 10px">
+        <div class="col-md-12 col-lg-12 px-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">{{user.name}}</h1>
+          </div>
+        </div>
+      </div>  
+      <div class="row" style="padding-bottom: 10px">
+        <div class="col-md-12 col-lg-12 px-4">
+          <div class="card-group">
+            <div class="card">
+              <h5 class="card-header">Total Contacts</h5>
+              <div class="card-body">
+                <h5 class="card-title">Current # of Contacts</h5>
+                <h1>{{contacts}}</h1>
+                <a href="/contacts" class="btn btn-primary">Contacts</a>
+              </div>
+            </div>            
+            <div class="card">
+              <h5 class="card-header">Transactions</h5>
+              <div class="card-body">
+                <h5 class="card-title">Number of Transactions (month)</h5>
+                <h1>{{transactions}}</h1>
+                <a href="/transactions" class="btn btn-primary">Transactions</a>
+              </div>
+            </div>            
+            <div class="card">
+              <h5 class="card-header">Contact Supporters</h5>
+              <div class="card-body">
+                <h5 class="card-title">Email Your Supporters</h5>
+                <p class="card-text">Click the link below to contact your supporters via email</p>
+                <a href="/email" class="btn btn-primary disabled">Email Supporters</a>
+              </div>
+            </div>            
+          </div>
+        </div>
+      </div>
+
+      <div class="row" style="padding-bottom: 10px">
+        <div class="col-md-12 col-lg-12 px-4">
+          <div class="card" style="width: 100%">
+            <h5 class="card-header">Add a Contact</h5>
+            <div class="card-body">
+              <h5 class="card-title">Fill Out The Form Below To Add A Contact</h5>
+              <p class="card-text">
+                <form id="mainInfo">
+                  <div class="row" style="padding-bottom: 10px">
+                    <div class="col">
+                      <input type="hidden" name="org_id" value="{{user.org_id}}">
+                      <input type="text" name="first_name" class="form-control" placeholder="First name">
+                    </div>
+                    <div class="col">
+                      <input type="text" name="last_name" class="form-control" placeholder="Last name">
+                    </div>
+                  </div>
+                  <div class="row" style="padding-bottom: 10px">
+                    <div class="col">
+                      <input type="text" name="address1" class="form-control" placeholder="Address">
+                    </div>
+                  </div>
+                  <div class="row" style="padding-bottom: 10px">
+                    <div class="col">
+                      <input type="text" name="city" class="form-control" placeholder="City">
+                    </div>
+                    <div class="col">
+                      <input type="text" name="st" class="form-control" placeholder="State">
+                    </div>
+                    <div class="col">
+                      <input type="text" name="zip" class="form-control" placeholder="Zip">
+                    </div>
+                  </div>
+                  <div class="row" style="padding-bottom: 10px">
+                    <div class="col">
+                      <input type="tel" name="phone" class="form-control" pattern="([0-9]{3}) [0-9]{3}-[0-9]{4}" placeholder="Phone">
+                    </div>
+                    <div class="col">
+                    </div>
+                    <div class="col">
+                    </div>
+                  </div>
+                  <div class="row" style="padding-bottom: 10px">
+                    <div class="col">
+                      <input type="email" name="email" class="form-control" placeholder="Email Address">
+                    </div>
+                  </div>
+                </form>                
+              </p>
+              <button id="insertInfo" class="btn btn-primary">Add</button>
+            </div>
+          </div>
+        </div>          
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script  src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script>
+
+    <script>
+      $(document).ready(function(){
+        $('#btnSearch').click(function(e){
+          e.stopPropagation();
+          var inputElement = $('input[type="search"]').val();
+          console.log("")
+          inputElement.replace(" ", "+");
+          window.location.href = "/search/" + inputElement;
+        });
+        $("#insertInfo").on("click", function(){
+          data = $("#mainInfo").serialize();
+          $.ajax({
+              type: "POST",
+              url: "/api/contact",
+              data: data,
+              dataType: "json",
+              success: function(data) {
+                jQuery.noConflict();
+                $("#mainInfo").trigger('reset');;
+                console.log(data.id);
+                var today = new Date();
+                buildDate = today.getDate();
+                buildDate += "/" + today. getMonth()+1;
+                buildDate += "/" + today. getFullYear();                
+                var contactHistoryData = {
+                  customer_id: data.id,
+                  customer_date: buildDate,
+                  contact_type: "Contact Added",
+                  contact_notes: "Contact Added to system."
+                }
+                formData = $.param(contactHistoryData);
+                console.log(contactHistoryData);
+                $.ajax({
+                    type: "POST",
+                    url: "/api/contact/history",
+                    data: formData,
+                    dataType: "json",
+                    success: function(data) {
+                      console.log(data);
+                      
+                    },
+                    error: function(data) {
+                        alert('error handling here');
+                        console.log(data);
+                    }
+                });
+              },
+              error: function() {
+                  alert('error handling here');
+              }
+          });
+        });
+      });
+    </script>
+
+
+  </body>
+</html>

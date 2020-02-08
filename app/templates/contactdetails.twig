@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Contacts - freeCRM</title>
+
+    <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link href="css/dashboard.css" rel="stylesheet">
+
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="#" style="padding-left: 10px; padding-right: 10px">freeCRM</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/dashboard">Home</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/contacts">Contacts</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/transactions">Transactions</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Logout</a>
+            </li>
+
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" value="{{token}}">
+          </form>
+          <button class="btn btn-outline-success" id="btnSearch">Search</button>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="row" style="padding-bottom: 10px">
+        <div class="col-md-12 col-lg-12 px-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap pt-3 pb-2 mb-3 border-bottom">
+            <h2>{{contact.first_name}} {% if contact.spouse_first != "" %} & {{contact.spouse_first}}{% endif %} {{contact.last_name}}</h2>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="padding-bottom: 10px">
+        <div class="col-md-12 col-lg-12 px-4">
+          <div class="card" style="width: 100%">
+            <h5 class="card-header">Contact Information</h5>
+            <div class="card-body">
+              <p class="card-text">
+                <form id="mainInfo">
+                  <div class="row" style="padding-bottom: 10px">
+                    <div class="col">
+                      <label for="first_name">First Name</label>
+                      <input type="text" name="first_name" class="form-control" placeholder="First name" value="{{contact.first_name}}">
+                    </div>
+                    <div class="col">
+                      <label for="last_name">Last Name</label>
+                      <input type="text" name="last_name" class="form-control" placeholder="Last name" value="{{contact.last_name}}">
+                    </div>
+                  </div>
+                  <div class="row" style="padding-bottom: 10px">
+                    <div class="col">
+                      <label for="spouse_first">Spouse First Name</label>
+                      <input type="text" name="spouse_first" class="form-control" placeholder="First name" value="{{contact.spouse_first}}">
+                    </div>
+                    <div class="col">
+                      <label for="spouse_last">Spouse Last Name</label>
+                      <input type="text" name="spouse_last" class="form-control" placeholder="Last name" value="{{contact.spouse_last}}">
+                    </div>
+                  </div>
+                  <div class="row" style="padding-bottom: 10px">
+                    <div class="col">
+                      <label for="address1">Address</label>
+                      <input type="text" name="address1" class="form-control" placeholder="Address" value="{{contact.address1}}">
+                    </div>
+                  </div>
+                  <div class="row" style="padding-bottom: 10px">
+                    <div class="col">
+                      <label for="city">City</label>
+                      <input type="text" name="city" class="form-control" placeholder="City" value="{{contact.city}}">
+                    </div>
+                    <div class="col">
+                      <label for="state">State</label>
+                      <input type="text" name="state" class="form-control" placeholder="State" value="{{contact.st}}">
+                    </div>
+                    <div class="col">
+                      <label for="zip">Zip</label>
+                      <input type="text" name="zip" class="form-control" placeholder="Zip" value="{{contact.zip}}">
+                    </div>
+                  </div>
+                  <div class="row" style="padding-bottom: 10px">
+                    <div class="col">
+                      <label for="phone">Phone</label>
+                      <input type="text" name="phone" class="form-control" placeholder="Phone" value="{{contact.phone}}">
+                    </div>
+                    <div class="col">
+                    </div>
+                    <div class="col">
+                    </div>
+                  </div>
+                  <div class="row" style="padding-bottom: 10px">
+                    <div class="col">
+                      <label for="email">Email</label>
+                      <input type="email" name="email" class="form-control" placeholder="Email Address" value="{{contact.email}}">
+                    </div>
+                  </div>
+                </form>                
+              </p>
+              <button id="updateInfo" class="btn btn-primary">Save</button>
+            </div>
+          </div>
+        </div>          
+      </div>
+      <div class="row" style="padding-bottom: 100px">
+        <div class="col-md-12 col-lg-12 px-4">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="history-tab" data-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="true">Contact History</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="notes-tab" data-toggle="tab" href="#notes" role="tab" aria-controls="notes" aria-selected="false">Notes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="notes-tab" data-toggle="tab" href="#transactions" role="tab" aria-controls="transactions" aria-selected="false">Transactions<span class="badge badge-primary" style="margin-left: 3px">{{numTrans}}</span></a>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="history" role="tabpanel" aria-labelledby="history-tab">
+              <div class="list-group">
+                  <button class="btn btn-primary" style="margin: 10px auto; width: 50%" data-toggle="modal" data-target="#contactHistoryAddModal" >Add Contact History Item</button>
+                  {% for item in history %}
+                    <div class="list-group-item list-group-item-action">
+                      <div class="card">
+                        <h5 class="card-header">{{item.contact_date|date("m/d/Y")}} - {{item.contact_type}}</h5>
+                        <div class="card-body">
+                          <p class="card-text">{{item.contact_notes}}</p>
+                        </div>
+                      </div>
+                    </div>
+                  {% endfor %}
+              </div>
+            </div>
+            <div class="tab-pane fade" id="notes" role="tabpanel" aria-labelledby="notes-tab">
+              <div class="list-group">
+                  <button class="btn btn-primary" id="addNote" style="margin: 10px auto; width: 50%" data-toggle="modal" data-target="#contactNoteAddModal">Add Note</button>
+                  {% for note in notes %}
+                    <div class="list-group-item list-group-item-action">
+                      <div class="card">
+                        <h5 class="card-header">{{note.note_date|date("m/d/Y")}}</h5>
+                        <div class="card-body">
+                          <p class="card-text">{{note.note}}</p>
+                        </div>
+                      </div>                    
+                    </div>
+                  {% endfor %}
+              </div>
+            </div>
+            <div class="tab-pane fade" id="transactions" role="tabpanel" aria-labelledby="transactions-tab">
+              <div class="list-group">
+                <button class="btn btn-primary" id="addTrans" style="margin: 10px auto; width: 50%" data-toggle="modal" data-target="#contactTransAddModal">Add Transaction</button>
+                {% for item in transactions %}
+                    <div class="list-group-item list-group-item-action">
+                      <div class="card">
+                        <h5 class="card-header">{{item.trans_date|date("m/d/Y")}} - {{item.trans_type}}</h5>
+                        <div class="card-body">
+                          <p class="card-text">${{item.trans_amt|number_format(2, '.', ',')}}<br>
+                            {{item.trans_desc}}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>  
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="contactHistoryAddModal" tabindex="-1" role="dialog" aria-labelledby="contactHistoryAddModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add Contact History</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="frmAddContact">
+              <input type="hidden" id="customer_id" name="customer_id" value={{contact.id}} />
+              <div class="form-group">
+                <label for="contact_date">Contact Date</label>
+                <input type="text" class="form-control" id="contact_date" name="contact_date" aria-describedby="contact_dateHelp" placeholder="Enter Contact Date" data-inputmask="'alias': 'mm/dd/yyyy','placeholder': 'mm/dd/yyyy'">
+              </div>
+              <div class="form-group">
+                <label for="contact_type">Contact Type</label>
+                <select class="form-control" id="contact_type" name="contact_type">
+                  <option>Email</option>
+                  <option>Phone Call</option>
+                  <option>Text</option>
+                  <option>Meeting</option>
+                  <option>Other</option>
+                </select>
+              </div>          
+              <div class="form-group">
+                <label for="contact_notes">Contact Notes</label>
+                <textarea class="form-control" id="contact_notes" name="contact_notes" rows="5"></textarea>
+              </div>
+            </form>      
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="addContactHistory">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>    
+
+    <!-- Modal -->
+    <div class="modal fade" id="contactNoteAddModal" tabindex="-1" role="dialog" aria-labelledby="contactNoteAddModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add Note</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="frmAddNote">
+              <input type="hidden" id="customer_id" name="customer_id" value={{contact.id}} />
+              <div class="form-group">
+                <label for="contact_date">Date</label>
+                <input type="text" class="form-control" id="note_date" name="note_date" aria-describedby="contact_dateHelp" placeholder="Enter Contact Date" data-inputmask="'alias': 'mm/dd/yyyy','placeholder': 'mm/dd/yyyy'">
+              </div>
+              <div class="form-group">
+                <label for="contact_notes">Notes</label>
+                <textarea class="form-control" id="note" name="note" rows="5"></textarea>
+              </div>
+            </form>      
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="addContactNote">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>    
+
+    <!-- Modal -->
+    <div class="modal fade" id="contactTransAddModal" tabindex="-1" role="dialog" aria-labelledby="contactTransAddModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add Transaction</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="frmAddTrans">
+              <input type="hidden" id="org_id" name="org_id" value={{contact.org_id}} />
+              <input type="hidden" id="customer_id" name="customer_id" value={{contact.id}} />
+              <div class="form-group">
+                <label for="trans_date">Transaction Date</label>
+                <input type="text" class="form-control" id="contact_date" name="trans_date" aria-describedby="trans_dateHelp" placeholder="Enter Transaction Date" data-inputmask="'alias': 'mm/dd/yyyy','placeholder': 'mm/dd/yyyy'">
+              </div>
+              <div class="form-group">
+                <label for="contact_type">Transaction Type</label>
+                <select class="form-control" id="trans_type" name="trans_type">
+                  <option>Donation</option>
+                  <option>Payment</option>
+                  <option>Other</option>
+                </select>
+              </div>          
+              <div class="form-group">
+                <label for="trans_amount">Transaction Amount</label>
+                <input type="text" class="form-control" id="trans_amt" name="trans_amt" aria-describedby="trans_amtHelp" placeholder="Enter Transaction Amount">
+              </div>
+              <div class="form-group">
+                <label for="trans_desc">Transaction Description</label>
+                <textarea class="form-control" id="trans_desc" name="trans_desc" rows="5"></textarea>
+              </div>
+            </form>      
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="addContactTrans">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>    
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script type='text/javascript' src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
+    <!-- Icons -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script>
+
+    <script>
+      $(document).ready(function(){
+        $('#btnSearch').click(function(e){
+          e.stopPropagation();
+          var inputElement = $('input[type="search"]').val();
+          console.log("")
+          inputElement.replace(" ", "+");
+          window.location.href = "/search/" + inputElement;
+        });
+
+        $(":input").inputmask();
+
+        $("#updateInfo").on("click", function(){
+          data = $("#mainInfo").serialize();
+          $.ajax({
+              type: "PUT",
+              url: "/api/contact/{{contact.id}}",
+              data: data,
+              dataType: "json",
+              success: function(data) {
+                console.log(data);
+              },
+              error: function() {
+                  alert('error handling here');
+              }
+          });
+        });
+
+        $("#addContactHistory").on("click", function(){
+          data = $("#frmAddContact").serialize();
+          $.ajax({
+              type: "POST",
+              url: "/api/contact/history",
+              data: data,
+              dataType: "json",
+              success: function(data) {
+                console.log(data);
+                jQuery.noConflict();
+                $('#contactHistoryAddModal').modal('toggle');
+                location.reload();
+              },
+              error: function(data) {
+                  alert('error handling here');
+                  console.log(data);
+              }
+          });
+        });
+
+        $("#addContactNote").on("click", function(){
+          data = $("#frmAddNote").serialize();
+          $.ajax({
+              type: "POST",
+              url: "/api/contact/notes",
+              data: data,
+              dataType: "json",
+              success: function(data) {
+                console.log(data);
+                jQuery.noConflict();
+                $('#contactNoteAddModal').modal('toggle');
+                location.reload();
+              },
+              error: function(data) {
+                  alert('error handling here');
+                  console.log(data);
+              }
+          });
+        });
+
+        $("#addContactTrans").on("click", function(){
+          data = $("#frmAddTrans").serialize();
+          $.ajax({
+              type: "POST",
+              url: "/api/contact/transactions",
+              data: data,
+              dataType: "json",
+              success: function(data) {
+                console.log(data);
+                jQuery.noConflict();
+                $('#contactTransAddModal').modal('toggle');
+                location.reload();
+              },
+              error: function(data) {
+                  alert('error handling here');
+                  console.log(data);
+              }
+          });
+        });
+
+      });
+    </script>
+
+  </body>
+</html>
