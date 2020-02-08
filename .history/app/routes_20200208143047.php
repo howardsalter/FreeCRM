@@ -49,7 +49,7 @@ $app->delete('/api/contact/{id}', App\Action\DeleteContactAction::class)
 $app->post('/api/contact/history', App\Action\InsertContactHistoryAction::class)
     ->setName('insertcontacthistory');
 
-$app->delete('/api/contact/history/{id}', App\Action\DeleteContactHistoryAction::class)
+$app->delete('/api/contact/history', App\Action\DeleteContactHistoryAction::class)
     ->setName('deletecontacthistory');
 
 $app->post('/api/contact/notes', App\Action\InsertContactNotesAction::class)

@@ -98,10 +98,6 @@ $container[App\Action\DeleteContactAction::class] = function ($c) {
     return new App\Action\DeleteContactAction($c->get('view'), $c->get('logger'), $c->get('db'));
 };
 
-$container[App\Action\DeleteContactHistoryAction::class] = function ($c) {
-    return new App\Action\DeleteContactHistoryAction($c->get('view'), $c->get('logger'), $c->get('db'));
-};
-
 $container[App\Action\InsertContactHistoryAction::class] = function ($c) {
     return new App\Action\InsertContactHistoryAction($c->get('view'), $c->get('logger'), $c->get('db'));
 };
