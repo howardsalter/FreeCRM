@@ -2,3 +2,4 @@ vendor/
 log/*
 cache/*
 composer.lock
+.history/*
